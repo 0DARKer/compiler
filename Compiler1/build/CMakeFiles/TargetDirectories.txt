@@ -1,0 +1,3 @@
+/home/darker/Documents/compiler/Compiler1/build/CMakeFiles/rebuild_cache.dir
+/home/darker/Documents/compiler/Compiler1/build/CMakeFiles/compiler.dir
+/home/darker/Documents/compiler/Compiler1/build/CMakeFiles/edit_cache.dir

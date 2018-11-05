@@ -1,0 +1,1 @@
+/bin/c++   -O0 -Wall -g2 -ggdb  -rdynamic CMakeFiles/compiler.dir/1G_FA.cpp.o CMakeFiles/compiler.dir/2NFA_DFA.cpp.o CMakeFiles/compiler.dir/3DFA_CO.cpp.o CMakeFiles/compiler.dir/2-5DFA_SDFA.cpp.o CMakeFiles/compiler.dir/1.cpp.o  -o compiler 
