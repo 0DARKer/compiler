@@ -1,5 +1,12 @@
-S->aA
-S->bB
-A->aA
-A->bB
-B->c
+S->0B
+S->1C
+B->0D
+B->1C
+B->0
+C->1D
+C->1
+C->0B
+D->0D
+D->1D
+D->0
+D->1

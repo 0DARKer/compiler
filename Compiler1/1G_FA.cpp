@@ -23,11 +23,11 @@ void G_FA(){
 			temp[1]=c[3];
 			temp[2]=0;
 		}
-		if((c[3]>='a'&&c[3]<='z')&&(c[4]>='A'&&c[4]<='Z')){
+		if(!(c[3]>='A'&&c[3]<='Z')&&(c[4]>='A'&&c[4]<='Z')){
 			temp[1]=c[4];
 			temp[2]=c[3];
 		}
-		if((c[3]>='a'&&c[3]<='z')&&c[4]=='\0'){
+		if(!(c[3]>='A'&&c[3]<='Z')&&c[4]=='\0'){
 			temp[1]='[';
 			temp[2]=c[3];
 		}
@@ -48,16 +48,18 @@ void G_FA(){
 	}	
 
 
-	memset(a.Delta,-1,sizeof(int)*27*27);
+	memset(a.Delta,-1,sizeof(int)*27*27);//init FA-Sigma FA-Q FA-Z FA-q0 FA-Delta
 	for(int i=0;i<Sum_Vt;i++)
 		a.Sigma.push_back(A.Vt[i]);
 	for(int i=0;i<Sum_Vn;i++)
 		a.Q.push_back(A.Vn[i]);
 	a.Q.push_back('[');
 	a.q0=A.s;
+	
 	for(int i=0;i<A.P.size();i++){
 		a.Delta[A.P[i][0]-'A'][A.P[i][1]-'A']=A.P[i][2];
 	}
+
 	a.Z.push_back('[');
 	ofstream fout("NFA.txt");
 	fout <<a.q0-'A'<<" ";
