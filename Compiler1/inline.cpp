@@ -41,14 +41,7 @@ void FA::store(const char* filename){
 			for(int j=0;j<27;j++)
 			{
 				if (Delta[i][j].size()!=0){
-					// if(a.Delta[i][j]!=0)
-					// printf("  %c   \n",a.Delta[i][j]);
-					// else
-					// 	printf("epsion\n");
-					// printf("%c--->%c\n",i+'A',j+'A');
-					// printf("\n");
 					fout << i<<" "<<j<<" ";
-
 					for(int k=0;k<Delta[i][j].size();k++)
 						fout << Delta[i][j][k]<<" ";
 					fout<<-1<<endl ;
@@ -168,21 +161,6 @@ FA FA::to_DFA(){
 			}
 
 			}
-			// vector<int>::iterator vi;
-			// for(vi=I_alpha[0].begin();vi!=I_alpha[0].end();vi++){
-			// 	int ck=1;
-			// 	for(int i=0;i<I[line].size();i++)
-			// 		if(I[line][i]==*vi)ck=-1;
-			// 	if(ck==1)
-			// 		I[line].push_back(*vi);
-			// }
-			// map<int,vector<int>>::iterator mi;
-			// for(mi=I_alpha.begin();mi!=I_alpha.end();mi++){
-			// 	if(mi->first==0){
-			// 		I_alpha.erase(mi);
-			// 		break;
-			// 	}
-			// }
 		}
 
 		//check new set is in I ; if true put the path to Delta;if false put in I.

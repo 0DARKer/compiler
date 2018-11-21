@@ -27,9 +27,5 @@ int main(){
             return 0;
         }
     }
-	// DFA_SDFA();
-	// while(1){
-	// 	DFA_CO();
- //    }
     return 0;
 }
