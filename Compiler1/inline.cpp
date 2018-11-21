@@ -6,6 +6,10 @@ using namespace std;
 FA::FA(){}
 FA::FA(const char* filename){
 	ifstream fin(filename);
+    if(!fin){
+        throw -1;
+        return ;
+    }
 	fin>>q0;//nfa.q0
 	while(!fin.eof()){
 		int c;
