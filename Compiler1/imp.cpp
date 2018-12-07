@@ -49,14 +49,16 @@ void FA::store(const char* filename){
 			}
 		}
 }
-G::G(const char *filename){
+G_3::G_3(const char *filename){
 	int Sum_Vn=0;
 	int Sum_Vt=0;
 	ifstream fin(filename);
 	int check=0;
 	while(!fin.eof()){//initialize P[][]
-		char c[6];
-		fin.getline(c,6);
+        char c[10];
+        fin.getline(c,10);
+        if(c[5]==0||c[4]==0);
+        else {throw -2;}
 		cout << c<<endl;
 		int* temp;
 		temp =  new int[3];
@@ -67,14 +69,15 @@ G::G(const char *filename){
 			temp[1]=c[3];
 			temp[2]=0;
 		}
-		if(!(c[3]>='A'&&c[3]<='Z')&&(c[4]>='A'&&c[4]<='Z')){
+        else if(!(c[3]>='A'&&c[3]<='Z')&&(c[4]>='A'&&c[4]<='Z')){
 			temp[1]=c[4];
 			temp[2]=c[3];
 		}
-		if(!(c[3]>='A'&&c[3]<='Z')&&c[4]=='\0'){
+        else if(!(c[3]>='A'&&c[3]<='Z')&&c[4]=='\0'){
 			temp[1]='[';
 			temp[2]=c[3];
-		}
+        }
+        else {throw -2;}
 		P.push_back(temp);
 	}
 	for(int i=0;i<P.size();i++){
@@ -90,7 +93,7 @@ G::G(const char *filename){
 		}	
 	}
 }
-FA G::to_FA(){
+FA G_3::to_FA(){
 	FA a;
 	vector<int>::iterator j;
 	for(j=Vt.begin();j!=Vt.end();j++)
@@ -163,7 +166,7 @@ FA FA::to_DFA(){
 			}
 		}
 
-		//check new set is in I ; if true put the path to Delta;if false put in I.
+        //check new set is in I ; if true put the path in Delta;if false put in I.
 		map<int , vector<int>>::iterator alpha_set;//talk about all the alpha_set.and put it in I or not.
 		for(alpha_set=I_alpha.begin();alpha_set!=I_alpha.end();alpha_set++){
 			tp = I_epsion(alpha_set->second);
@@ -256,7 +259,7 @@ void FA::c_match(const char* c){
 			int k;
 			for(k=0;k<27;k++){
 				for(int &vvi:Delta[j][k])
-					if(vvi==c[i]){ck=-1;break;}
+                    if(vvi==c[i]){ck=-1;break;}
 				if(ck==-1)break;
 			}
 			if(ck==-1){i++;j=k;}

@@ -28,13 +28,13 @@ private:
 	}
 	std::vector<int> I_epsion(std::vector<int> );
 };	 
-struct G{
+struct G_3{
 	std::vector<int> Vn;
 	std::vector<int> Vt;
 	std::vector<int*> P;
 	int s;
 public:
-	G(const char*);
+    G_3(const char*);
 	FA to_FA();
 };
 void G_FA();
