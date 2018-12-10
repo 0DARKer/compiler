@@ -59,7 +59,7 @@ G_3::G_3(const char *filename){
         fin.getline(c,10);
         if(c[5]==0||c[4]==0);
         else {throw -2;}
-		cout << c<<endl;
+        cout << c<<endl;
 		int* temp;
 		temp =  new int[3];
 		if(c[0]=='\0')break;
@@ -253,6 +253,7 @@ void FA::DFA_simpfy(){
 	}
 }
 void FA::c_match(const char* c){
+    if(c[0]==0){throw 0;}
 	int i=0,j;{//i is the position in c[],and j is the state right now.
 		for(j=q0;j<27&&c[i]!='\0';){
 			int ck=0;
@@ -271,4 +272,26 @@ void FA::c_match(const char* c){
 		if(vi==j){ck=-1;break;}
 	if(ck==-1)cout << "Yes!"<<endl;
 	else cout << "no , string is uncompleted."<<endl;
+}
+
+void FA::store_Graphviz(string filename){
+    ofstream fout(filename);
+    string shell_script;
+    shell_script="digraph {\n";
+    for(int i=0;i<27;i++){
+        for(int j=0;j<27;j++){
+            if(Delta[i][j].size()){
+                char left=i+'A';
+                char right=j+'A';
+                for(const char &weight:Delta[i][j]){
+
+                    shell_script=shell_script+"     "+left+" -> "+right+"[label=\""+weight+"\"]\n";
+//                    shell_script+=
+                }
+//                shell_script+=
+            }
+        }
+    }
+    shell_script+="}\n";
+    fout << shell_script;
 }

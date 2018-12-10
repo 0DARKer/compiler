@@ -7,6 +7,9 @@ int main(){
         FA nfa=g.to_FA();
         FA dfa=nfa.to_DFA();
         dfa.DFA_simpfy();
+        dfa.store_Graphviz("/home/darker/1.dot");
+        system("dot -Tpng /home/darker/1.dot -o /home/darker/1.png");
+        system("gwenview /home/darker/1.png -f &");
         while(1){
             string a;
             cin >> a;
@@ -21,6 +24,10 @@ int main(){
         }
         if(j==-2){
             cout << "not a G_3"<<endl;
+            return 0;
+        }
+        if(j==0){
+            cout << "exit program.byebye asshole.";
             return 0;
         }
     }

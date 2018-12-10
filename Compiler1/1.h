@@ -15,6 +15,7 @@ public:
 	FA to_DFA();
 	void DFA_simpfy();
 	void c_match(const char*);
+    void store_Graphviz(std::string);
 private:
 	int compare(std::vector<int> * a,std::vector<int> *b ,int N){
 		for(int i=0;i<N;i++)
