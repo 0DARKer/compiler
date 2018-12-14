@@ -5,8 +5,13 @@ int main(){
     try {
         G_3 g("/home/darker/1.txt");
         FA nfa=g.to_FA();
+        nfa.store("/home/darker/nfa.txt");
         FA dfa=nfa.to_DFA();
+        dfa.store("/home/darker/dfa.txt");
+
+
         dfa.DFA_simpfy();
+        dfa.store("/home/darker/dfaP.txt");
         dfa.store_Graphviz("/home/darker/1.dot");
         system("dot -Tpng /home/darker/1.dot -o /home/darker/1.png");
         system("gwenview /home/darker/1.png -f &");

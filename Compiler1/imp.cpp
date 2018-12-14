@@ -106,17 +106,38 @@ FA G_3::to_FA(){
 	for(int i=0;i<P.size();i++){
 		vector<int>::iterator j;
 		bool ck=0;
+        char temp=P[i][2];
+        if(temp=='~')temp=0;
 		for(j=a.Delta[P[i][0]-'A'][P[i][1]-'A'].begin();j!=a.Delta[P[i][0]-'A'][P[i][1]-'A'].end();j++){
-			if(*j==P[i][2])ck=1;
+            if(*j==temp)ck=1;
 		}
 		if(ck==0)//keep no same.
-			a.Delta[P[i][0]-'A'][P[i][1]-'A'].push_back(P[i][2]);
+            a.Delta[P[i][0]-'A'][P[i][1]-'A'].push_back(temp);
 		}
 	a.Z.push_back('['-'A');
 	return a;
 }
-
-vector<int> FA::I_epsion(vector<int> a){
+void FA::I_epsion(vector<int> & a,char i){
+    for(int j=0;j<27;j++){
+        if(Delta[i][j].size())
+            for(int &k:Delta[i][j])
+                if(k==0){
+                    int ck=0;
+                    for(int &l:a){
+                        if(l==j){
+                            ck=1;
+                            break;
+                        }
+                    }
+                    if(ck==0){
+                        a.push_back(j);
+                        I_epsion(a,j);
+                    }
+                }
+    }
+//    return a;
+}
+void FA::I_epsion(vector<int> & a){
 	for(int &i:a){
 		for(int j=0;j<27;j++){
 			if(Delta[i][j].size())
@@ -129,18 +150,23 @@ vector<int> FA::I_epsion(vector<int> a){
 								break;
 							}
 						}
-						if(ck==0)a.push_back(j);
+                        if(ck==0){
+                            a.push_back(j);
+                            I_epsion(a,j);
+                        }
+
 					}
 		}
 	}
-	return a;
+
+//	return a;
 }
 FA FA::to_DFA(){
 	map<int , vector<int>> I_alpha; //(alpha,alpha_set)
 	vector<int> tp;
 	vector<vector<int>> I;{//I(new_line)
 		tp.push_back(q0);
-		tp = I_epsion(tp);
+        I_epsion(tp);
 		I.push_back(tp);
 	} 
 	FA dfa;
@@ -152,7 +178,7 @@ FA FA::to_DFA(){
 				if(Delta[x][y].size()){
 				// vector<int>::iterator alpha;
 				for(int &alpha:Delta[x][y]){
-					if(alpha==0)continue;
+                    if(alpha==0)continue;//error
 					bool ck=0;
 					// vector<int>::iterator i;
 					// for(int &j:alpha)
@@ -169,7 +195,8 @@ FA FA::to_DFA(){
         //check new set is in I ; if true put the path in Delta;if false put in I.
 		map<int , vector<int>>::iterator alpha_set;//talk about all the alpha_set.and put it in I or not.
 		for(alpha_set=I_alpha.begin();alpha_set!=I_alpha.end();alpha_set++){
-			tp = I_epsion(alpha_set->second);
+            tp=alpha_set->second;
+            I_epsion(tp);
 			int ck=0;//if ck==0 ; then alpha_set put in I ,if ck==1 then put in path ,if ck==-1 path exit ,do nothing.
 			for(int new_line=0;new_line<I.size();new_line++){
 				if(tp==I[new_line]){//we should define a function here . this is a simple thought.
@@ -196,15 +223,15 @@ FA FA::to_DFA(){
 			}
 		}
 		int ck=1;//find set-Z.
-		for(int i=0;i<Z.size();i++){
-			for(int set=0;set<I[line].size();set++)
-			if(I[line][set]==Z[i]){
-				ck=-1;
-				break;
-			}
-			if(ck==-1){dfa.Z.push_back(line);break;}
-		}
-	}
+        for(int i=0;i<Z.size();i++){
+            for(int set=0;set<I[line].size();set++)
+            if(I[line][set]==Z[i]){
+                ck=-1;
+                break;
+            }
+            if(ck==-1){dfa.Z.push_back(line);break;}
+        }
+    }
 	dfa.q0=0;
 	return dfa;	
 

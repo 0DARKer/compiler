@@ -27,7 +27,8 @@ private:
 		if(i==j)return j;
 		return a[j]=together(a,a[i],i);
 	}
-	std::vector<int> I_epsion(std::vector<int> );
+    void I_epsion(std::vector<int>& );
+    void I_epsion(std::vector<int>&, char );
 };	 
 struct G_3{
 	std::vector<int> Vn;
@@ -38,10 +39,6 @@ public:
     G_3(const char*);
 	FA to_FA();
 };
-void G_FA();
-void NFA_DFA();
-void DFA_CO();
-void DFA_SDFA();
 int compare(int * a,int *b ,int N);
 int together(int *a,int i,int j);
 #endif
