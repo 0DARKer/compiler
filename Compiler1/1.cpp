@@ -5,13 +5,13 @@ int main(){
     try {
         G_3 g("/home/darker/1.txt");
         FA nfa=g.to_FA();
-        nfa.store("/home/darker/nfa.txt");
+//        nfa.store("/home/darker/nfa.txt");
+//        cout << nfa.is_DFA()<<endl;
         FA dfa=nfa.to_DFA();
-        dfa.store("/home/darker/dfa.txt");
-
-
+//        cout << dfa.is_DFA()<<endl;
+//        dfa.store("/home/darker/dfa.txt");
         dfa.DFA_simpfy();
-        dfa.store("/home/darker/dfaP.txt");
+//        dfa.store("/home/darker/dfaP.txt");
         dfa.store_Graphviz("/home/darker/1.dot");
         system("dot -Tpng /home/darker/1.dot -o /home/darker/1.png");
         system("gwenview /home/darker/1.png -f &");
@@ -32,7 +32,7 @@ int main(){
             return 0;
         }
         if(j==0){
-            cout << "exit program.byebye asshole.";
+            cout << "exit program...";
             return 0;
         }
     }

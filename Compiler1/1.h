@@ -2,8 +2,9 @@
 #define oneH 1
 #include<iostream>
 #include<vector>
+const int MAX=30;
 struct FA{
-	std::vector<int> Delta[27][27];
+    std::vector<int> Delta[MAX][MAX];
 	int q0;
 	std::vector<int> Sigma;
 	std::vector<int> Q;
@@ -16,6 +17,7 @@ public:
 	void DFA_simpfy();
 	void c_match(const char*);
     void store_Graphviz(std::string);
+    bool is_DFA();
 private:
 	int compare(std::vector<int> * a,std::vector<int> *b ,int N){
 		for(int i=0;i<N;i++)

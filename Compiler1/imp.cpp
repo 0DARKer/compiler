@@ -36,9 +36,9 @@ void FA::store(const char* filename){
 	ofstream fout(filename);
 	fout <<q0<<endl;
 	fout <<Z[0]<<" "<<-1<<endl;
-	for(int i=0;i<27;i++)
+    for(int i=0;i<MAX;i++)
 		{
-			for(int j=0;j<27;j++)
+            for(int j=0;j<MAX;j++)
 			{
 				if (Delta[i][j].size()!=0){
 					fout << i<<" "<<j<<" ";
@@ -118,7 +118,7 @@ FA G_3::to_FA(){
 	return a;
 }
 void FA::I_epsion(vector<int> & a,char i){
-    for(int j=0;j<27;j++){
+    for(int j=0;j<MAX;j++){
         if(Delta[i][j].size())
             for(int &k:Delta[i][j])
                 if(k==0){
@@ -139,7 +139,7 @@ void FA::I_epsion(vector<int> & a,char i){
 }
 void FA::I_epsion(vector<int> & a){
 	for(int &i:a){
-		for(int j=0;j<27;j++){
+        for(int j=0;j<MAX;j++){
 			if(Delta[i][j].size())
 				for(int &k:Delta[i][j])
 					if(k==0){
@@ -174,7 +174,7 @@ FA FA::to_DFA(){
 		I_alpha.clear();
 		for(int set=0;set<I[line].size();set++){//find the set path.
 			int x = I[line][set];
-			for(int y=0;y<27;y++){//find a status' path.when get a alpha ,then change to another status.
+            for(int y=0;y<MAX;y++){//find a status' path.when get a alpha ,then change to another status.
 				if(Delta[x][y].size()){
 				// vector<int>::iterator alpha;
 				for(int &alpha:Delta[x][y]){
@@ -237,22 +237,22 @@ FA FA::to_DFA(){
 
 }
 void FA::DFA_simpfy(){
-	int a[27];
-	for(int i=0;i<27;i++)
+    int a[MAX];
+    for(int i=0;i<MAX;i++)
 		a[i]=i;
-	for(int i=0;i<27;i++){
-		for(int j=i+1;j<27;j++){
+    for(int i=0;i<MAX;i++){
+        for(int j=i+1;j<MAX;j++){
 			bool cki=0,ckj=1;
 			for(int k=0;k<Z.size();k++){
 				if(Z[k]==i)cki=1;
 				if(Z[k]==j)ckj=1;
 			}
 			if(cki==ckj)
-					if(compare(Delta[i],Delta[j],27)==1)together(a,i,j);
+                    if(compare(Delta[i],Delta[j],MAX)==1)together(a,i,j);
 		}
 	}
 
-	for(int i=0;i<27;i++){
+    for(int i=0;i<MAX;i++){
 		if(a[i]!=i){
 			vector<int>::iterator iter;
 			for(iter=Q.begin();iter!=Q.end();iter++){//rm from Q
@@ -267,11 +267,11 @@ void FA::DFA_simpfy(){
 					break;
 				}
 			}
-			for(int j=0;j<27;j++)
+            for(int j=0;j<MAX;j++)
 				Delta[i][j].clear();
 			continue;
 		}
-		for(int j=0;j<27;j++){
+        for(int j=0;j<MAX;j++){
 			if(Delta[i][j].size()!=0&&a[j]!=j){//the end state replace by root state.
 				Delta[i][a[j]]=Delta[i][j];
 				Delta[i][j].clear();
@@ -282,10 +282,10 @@ void FA::DFA_simpfy(){
 void FA::c_match(const char* c){
     if(c[0]==0){throw 0;}
 	int i=0,j;{//i is the position in c[],and j is the state right now.
-		for(j=q0;j<27&&c[i]!='\0';){
+        for(j=q0;j<MAX&&c[i]!='\0';){
 			int ck=0;
 			int k;
-			for(k=0;k<27;k++){
+            for(k=0;k<MAX;k++){
 				for(int &vvi:Delta[j][k])
                     if(vvi==c[i]){ck=-1;break;}
 				if(ck==-1)break;
@@ -305,8 +305,8 @@ void FA::store_Graphviz(string filename){
     ofstream fout(filename);
     string shell_script;
     shell_script="digraph {\n";
-    for(int i=0;i<27;i++){
-        for(int j=0;j<27;j++){
+    for(int i=0;i<MAX;i++){
+        for(int j=0;j<MAX;j++){
             if(Delta[i][j].size()){
                 char left=i+'A';
                 char right=j+'A';
@@ -321,4 +321,17 @@ void FA::store_Graphviz(string filename){
     }
     shell_script+="}\n";
     fout << shell_script;
+}
+
+bool FA::is_DFA(){
+    for(int i=0;i<MAX;i++)
+        for(int j=0;j<MAX;j++)
+            if(Delta[i][j].size())
+                for(int k=j+1;k<MAX;k++)
+                {
+                    for(int  &l:Delta[i][j])
+                        for(int  &m:Delta[i][k])
+                            if(l==m)return 0;
+                }
+    return 1;
 }
